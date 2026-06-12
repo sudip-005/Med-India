@@ -9,9 +9,10 @@ class AuthService {
      * Registers a Patient user and inserts their profile.
      */
     static async signupPatient(email, password, profileData) {
-        const { data: authData, error: authError } = await supabase_1.supabase.auth.signUp({
+        const { data: authData, error: authError } = await supabase_1.supabaseAdmin.auth.admin.createUser({
             email,
             password,
+            email_confirm: true,
         });
         if (authError || !authData.user) {
             throw new Error(authError?.message || 'Authentication signup failed');
@@ -36,9 +37,10 @@ class AuthService {
      * Registers a Doctor user and inserts their profile.
      */
     static async signupDoctor(email, password, profileData) {
-        const { data: authData, error: authError } = await supabase_1.supabase.auth.signUp({
+        const { data: authData, error: authError } = await supabase_1.supabaseAdmin.auth.admin.createUser({
             email,
             password,
+            email_confirm: true,
         });
         if (authError || !authData.user) {
             throw new Error(authError?.message || 'Authentication signup failed');
@@ -62,9 +64,10 @@ class AuthService {
      * Registers a Retailer user and inserts their profile.
      */
     static async signupRetailer(email, password, profileData) {
-        const { data: authData, error: authError } = await supabase_1.supabase.auth.signUp({
+        const { data: authData, error: authError } = await supabase_1.supabaseAdmin.auth.admin.createUser({
             email,
             password,
+            email_confirm: true,
         });
         if (authError || !authData.user) {
             throw new Error(authError?.message || 'Authentication signup failed');

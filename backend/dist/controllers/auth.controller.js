@@ -8,7 +8,7 @@ class AuthController {
             const { email, password, ...profileData } = req.body;
             const result = await auth_service_1.AuthService.signupPatient(email, password, profileData);
             return res.status(201).json({
-                message: 'Patient registered successfully. Verification email sent.',
+                message: 'Patient registered successfully. You can now log in.',
                 user: result.user,
             });
         }
@@ -21,7 +21,7 @@ class AuthController {
             const { email, password, ...profileData } = req.body;
             const result = await auth_service_1.AuthService.signupDoctor(email, password, profileData);
             return res.status(201).json({
-                message: 'Doctor registered successfully. Verification email sent.',
+                message: 'Doctor registered successfully. You can now log in.',
                 user: result.user,
             });
         }
@@ -34,7 +34,7 @@ class AuthController {
             const { email, password, ...profileData } = req.body;
             const result = await auth_service_1.AuthService.signupRetailer(email, password, profileData);
             return res.status(201).json({
-                message: 'Retailer registered successfully. Verification email sent.',
+                message: 'Retailer registered successfully. You can now log in.',
                 user: result.user,
             });
         }
