@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import ws from 'ws';
 import { env } from './env';
 
 // Standard client for operations that use user-level credentials
@@ -7,6 +8,9 @@ export const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY, {
     persistSession: false,
     autoRefreshToken: false,
   },
+  realtime: {
+    transport: ws as any,
+  },
 });
 
 // Admin client that bypasses Row Level Security (RLS) for server-side trusted operations
@@ -14,6 +18,9 @@ export const supabaseAdmin = createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE
   auth: {
     persistSession: false,
     autoRefreshToken: false,
+  },
+  realtime: {
+    transport: ws as any,
   },
 });
 

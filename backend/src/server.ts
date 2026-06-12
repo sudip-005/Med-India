@@ -2,7 +2,7 @@ import app from './app';
 import { env } from './config/env';
 import { initializeStorageBuckets } from './config/supabase';
 
-const PORT = env.PORT || 5000;
+const PORT = env.PORT || 5001;
 
 async function startServer() {
   try {

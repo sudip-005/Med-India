@@ -10,7 +10,7 @@ const zod_1 = require("zod");
 // Resolve path to the root of the backend folder where .env is located
 dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../../.env') });
 const envSchema = zod_1.z.object({
-    PORT: zod_1.z.coerce.number().default(5000),
+    PORT: zod_1.z.coerce.number().default(5001),
     NODE_ENV: zod_1.z.enum(['development', 'production', 'test']).default('development'),
     SUPABASE_URL: zod_1.z.string().url(),
     SUPABASE_ANON_KEY: zod_1.z.string().min(1),

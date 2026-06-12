@@ -13,6 +13,97 @@ END;
 $$ language 'plpgsql';
 
 -- ==========================================
+-- 0. USER PROFILES TABLES (Sync with Auth)
+-- ==========================================
+
+-- PATIENTS PROFILE TABLE
+CREATE TABLE IF NOT EXISTS patients (
+    patient_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255),
+    gender VARCHAR(50),
+    date_of_birth DATE,
+    blood_group VARCHAR(10),
+    phone VARCHAR(50),
+    emergency_contact_name VARCHAR(255),
+    emergency_contact_phone VARCHAR(50),
+    allergies TEXT[] DEFAULT '{}',
+    medical_history TEXT,
+    insurance_provider VARCHAR(255),
+    insurance_policy_number VARCHAR(255),
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE OR REPLACE TRIGGER update_patients_modtime
+    BEFORE UPDATE ON patients
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+-- DOCTORS PROFILE TABLE
+CREATE TABLE IF NOT EXISTS doctors (
+    doctor_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255),
+    gender VARCHAR(50),
+    date_of_birth DATE,
+    specialization VARCHAR(255) NOT NULL,
+    qualification VARCHAR(255),
+    registration_number VARCHAR(255) UNIQUE NOT NULL,
+    experience_years INTEGER DEFAULT 0,
+    phone VARCHAR(50),
+    clinic_name VARCHAR(255),
+    clinic_address TEXT,
+    city VARCHAR(100),
+    state VARCHAR(100),
+    country VARCHAR(100) DEFAULT 'India',
+    consultation_fee DECIMAL(10,2),
+    available_days VARCHAR(50)[] DEFAULT '{}',
+    available_time_start TIME,
+    available_time_end TIME,
+    bio TEXT,
+    registration_certificate_url TEXT,
+    degree_certificate_url TEXT,
+    profile_image_url TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE OR REPLACE TRIGGER update_doctors_modtime
+    BEFORE UPDATE ON doctors
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+-- RETAILERS PROFILE TABLE
+CREATE TABLE IF NOT EXISTS retailers (
+    retailer_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    shop_name VARCHAR(255) NOT NULL,
+    owner_name VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    business_id VARCHAR(255) UNIQUE NOT NULL,
+    medical_license_id VARCHAR(255) UNIQUE NOT NULL,
+    shop_address TEXT NOT NULL,
+    city VARCHAR(100),
+    state VARCHAR(100),
+    pincode VARCHAR(20),
+    business_license_url TEXT,
+    medical_license_url TEXT,
+    gst_certificate_url TEXT,
+    stock_file_url TEXT,
+    shop_image_url TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE OR REPLACE TRIGGER update_retailers_modtime
+    BEFORE UPDATE ON retailers
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+-- ==========================================
 -- 1. ADDRESSES TABLE
 -- ==========================================
 CREATE TABLE IF NOT EXISTS addresses (
