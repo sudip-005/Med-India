@@ -105,6 +105,8 @@ The backend will compile TypeScript and listen on port `5000`. Storage buckets w
 cd streamlit
 pip install -r requirements.txt
 streamlit run app.py
+
+python -m streamlit run app.py
 ```
 The interface will be served at `http://localhost:8501`.
 
